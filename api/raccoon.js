@@ -1,6 +1,6 @@
-const axios = require("axios");
+import axios from "axios";
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   const query = req.query.q || "funny raccoon";
   const serpKey = process.env.SERPAPI_KEY;
 
@@ -23,10 +23,10 @@ module.exports = async (req, res) => {
     const imgResp = await axios.get(image, { responseType: "arraybuffer" });
 
     res.setHeader("Content-Type", "image/jpeg");
-    res.setHeader("Content-Disposition", `inline; filename="raccoon.jpg"`);
+    res.setHeader("Content-Disposition", `inline; filename=\"raccoon.jpg\"`);
     res.status(200).send(imgResp.data);
   } catch (err) {
-    console.error(err);
+    console.error("Raccoon crash:", err);
     res.status(500).json({ error: "raccoon malfunction" });
   }
-};
+}
