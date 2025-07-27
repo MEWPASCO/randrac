@@ -4,11 +4,12 @@ export default async function handler(req, res) {
   const query = req.query.q || "funny raccoon";
   const serpKey = process.env.SERPAPI_KEY;
 
-  const params = {
-    q: query,
-    tbm: "isch",
-    api_key: serpKey
-  };
+const params = {
+  q: query,
+  tbm: "isch",
+  tbs: "itp:photo",
+  api_key: serpKey
+};
 
 try {
   const response = await axios.get("https://serpapi.com/search", { params });
