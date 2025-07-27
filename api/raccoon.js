@@ -5,32 +5,47 @@ export default async function handler(req, res) {
   const serpKey = process.env.SERPAPI_KEY;
 
 const params = {
+  engine: "google_images",
   q: query,
   tbm: "isch",
-  tbs: "itp:photo",
+  tbs: "itp:photo,ic:trans", // photo + transparent (removes some memes/stock)
   api_key: serpKey
 };
 
+
 try {
   const response = await axios.get("https://serpapi.com/search", { params });
-  console.log("SerpAPI raw response:", JSON.stringify(response.data, null, 2)); // 🔍 ADD THIS
 
-  const results = response.data.images_results;
+  // Extract images from SerpAPI
+  let results = response.data.images_results;
 
-  if (!results || results.length === 0) {
-    return res.status(404).json({ error: "No raccoons found" });
+  // ✅ Filter to get rid of memes, stickers, fursuits, etc.
+  results = results.filter(r =>
+    r.original &&
+    r.original.endsWith(".jpg") &&
+    !r.title.toLowerCase().includes("sticker") &&
+    !r.title.toLowerCase().includes("clipart") &&
+    !r.title.toLowerCase().includes("fursuit") &&
+    !r.original.includes(".svg") &&
+    !r.original.includes("logo") &&
+    !r.title.toLowerCase().includes("meme")
+  );
+
+  if (!results.length) {
+    return res.status(404).json({ error: "Only cursed raccoons found." });
   }
 
   const image = results[Math.floor(Math.random() * results.length)].original;
 
+  // ✅ Stream the image back
   const imgResp = await axios.get(image, { responseType: "arraybuffer" });
 
   res.setHeader("Content-Type", "image/jpeg");
-  res.setHeader("Content-Disposition", `inline; filename=\"raccoon.jpg\"`);
+  res.setHeader("Content-Disposition", `inline; filename="raccoon.jpg"`);
   res.status(200).send(imgResp.data);
+
 } catch (err) {
   console.error("Raccoon crash:", err.message);
   res.status(500).json({ error: "raccoon malfunction" });
 }
-
 }
