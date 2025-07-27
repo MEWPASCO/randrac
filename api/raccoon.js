@@ -1,14 +1,25 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
-  const query = req.query.q || "funny raccoon";
+  const queries = [
+   "cute raccoon in nature",
+   "real raccoon wildlife photo",
+   "baby raccoon face closeup",
+   "adorable raccoon in forest",
+   "wild raccoon closeup",
+   "photograph of raccoon",
+   "raccoon peeking from bush",
+   "backyard raccoon at night"
+  ];
+  const query = queries[Math.floor(Math.random() * queries.length)];
+
   const serpKey = process.env.SERPAPI_KEY;
 
 const params = {
   engine: "google_images",
   q: query,
   tbm: "isch",
-  tbs: "itp:photo,ic:trans", // photo + transparent (removes some memes/stock)
+  tbs: "itp:photo",
   api_key: serpKey
 };
 
