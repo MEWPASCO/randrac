@@ -20,10 +20,9 @@ const params = {
 try {
   const response = await axios.get("https://serpapi.com/search", { params });
 
-  // Extract images from SerpAPI
   let results = response.data.images_results;
 
-  // ✅ Filter to get rid of memes, stickers, fursuits, etc.
+  // Fallback because I suck at coding
   results = results.filter(r =>
     r.original &&
     r.original.endsWith(".jpg") &&
@@ -41,7 +40,6 @@ try {
 
   const image = results[Math.floor(Math.random() * results.length)].original;
 
-  // ✅ Stream the image back
   const imgResp = await axios.get(image, { responseType: "arraybuffer" });
 
   res.setHeader("Content-Type", "image/jpeg");
