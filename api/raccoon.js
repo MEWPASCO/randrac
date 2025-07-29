@@ -2,14 +2,7 @@ import axios from "axios";
 
 export default async function handler(req, res) {
   const queries = [
-   "cute raccoon in nature",
-   "real raccoon wildlife photo",
-   "baby raccoon face closeup",
-   "adorable raccoon in forest",
-   "wild raccoon closeup",
-   "photograph of raccoon",
-   "raccoon peeking from bush",
-   "backyard raccoon at night"
+   "raccoon -plush -toy -furry -merch",
   ];
   const query = queries[Math.floor(Math.random() * queries.length)];
 
