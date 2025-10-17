@@ -1,8 +1,5 @@
 {
-  "name": "randdog-proxy",
-  "version": "1.0.0",
-  "type": "module",
-  "dependencies": {
-    "axios": "^1.6.0"
-  }
+  "name": "randrac-proxy",
+  "version": "1.1.0",
+  "type": "module"
 }
