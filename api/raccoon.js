@@ -16,7 +16,7 @@ const BLOCK_WORDS = [
 ];
 
 const QUERIES = [
-  "raccoon"
+  "raccoon",
   "real raccoon photo",
   "wild raccoon close up",
   "cute raccoon in nature",
